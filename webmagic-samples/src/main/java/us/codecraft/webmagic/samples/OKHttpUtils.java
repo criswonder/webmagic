@@ -30,7 +30,7 @@ public class OKHttpUtils {
 		return res;
 	}
 
-	public static String  bowlingJson(String player1, String urls) {
+	public static String  bowlingJson(String name, String urls,String cid) {
 //		return "{'user_id':'useridxxx','ablum_id':'aidxxxxxxxx'"+ 
 //				"}";
 		
@@ -42,9 +42,11 @@ public class OKHttpUtils {
 //	        + "\"ablum_id\":ablum_idablum_id"
 //	        + "}";
 		   
-		   return "{\"category_id\":\"53a438406cc4cd870516b240\","
+		   return "{\"category_id\":\""
+		   		+ cid
+		   		+ "\","
 		   + "\"urls\":\""+urls+"\","
-		   + "\"name\":\""+player1+"\""
+		   + "\"name\":\""+name+"\""
 		   + "}";
 	}
 

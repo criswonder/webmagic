@@ -21,6 +21,7 @@ public class MM22 implements PageProcessor {
 
     private Site site = Site.me().setRetryTimes(3).setSleepTime(1000);
 
+
     @Override
     public void process(Page page) {
     	String title = page.getHtml().xpath("//*[@id='b-show']/dl/dd[1]/strong/text()").toString();
@@ -58,27 +59,41 @@ public class MM22 implements PageProcessor {
     public Site getSite() {
         return site;
     }
-
+    static String jymvStartUrl = "http://www.22mm.cc/mm/jingyan/PHaedaeePbHadmHmJ.html";
+    static String qlmvStartUrl = "http://www.22mm.cc/mm/qingliang/PiaeaJCJCCJaiHdmJ.html";
+    static String jymv_cat_id = "53a438406cc4cd870516b240";
+    static String qlmv_cat_id = "53a438496cc4cd870516b241";
+    public static String cid = qlmv_cat_id;
+    public static String startUrl = qlmvStartUrl;
+    
     public static void main(String[] args) {
+    	int threadNums = 5;
     	if(args!=null && args.length>0){
-    		System.out.println(args[0]);
-    		 Spider.create(new MM22()).addUrl("http://www.22mm.cc/mm/bagua/PiaJHaPHmbdamHbiH.html").thread(1)
-    	        .setDownloader(new SeleniumDownloader(args[0]).setSleepTime(1000))
-    	        .run();    		
+    		System.out.println(args);
+    		if(args.length==1){
+    			//仅仅传了driver的地址
+    		}else if(args.length==2){
+        		startUrl = args[1];
+    		}else if(args.length==3){
+    			startUrl = args[1];
+    			cid =args[2];
+    		}
+    		Spider.create(new MM22()).addUrl(startUrl).thread(threadNums)
+    		.setDownloader(new SeleniumDownloader(args[0]).setSleepTime(1000))
+    		.run();    		
     	}
     	else{
     		System.out.println("beatch, no args");
-    		 Spider.create(new MM22()).addUrl("http://www.22mm.cc/mm/bagua/PiaJHaPHmbdamHbiH.html").thread(1)
+    		 Spider.create(new MM22()).addUrl(startUrl).thread(threadNums)
     	        .setDownloader(new SeleniumDownloader("/Users/kehongyun/tools/chrome/chromedriver").setSleepTime(1000))
     	        .run();
     	}
-       
     
     }
 
 	private static void submmitDataToServer(final Album album) {
 
-		ExecutorService es =Executors.newFixedThreadPool(2);
+		ExecutorService es =Executors.newFixedThreadPool(3);
 		es.execute(new Runnable() {
 			
 			@Override
@@ -87,14 +102,15 @@ public class MM22 implements PageProcessor {
 				for(String str:album.getUrls()){
 					sb.append(str).append(";");
 				}
-				String jsonStr = OKHttpUtils.bowlingJson(album.getName(), sb.deleteCharAt(sb.length()-1).toString());
+				String jsonStr = OKHttpUtils.bowlingJson(album.getName(), sb.deleteCharAt(sb.length()-1).toString(),cid);
 				try {
 //					String result = OKHttpUtils.post("http://localhost:3000/category/list", jsonStr);
 					String result = OKHttpUtils.post("http://106.187.99.142:3000/category/list", jsonStr);
-					System.out.println(result);
+					System.out.println("post result-->"+result);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}finally{
+					
 				}
 			}
 		});
