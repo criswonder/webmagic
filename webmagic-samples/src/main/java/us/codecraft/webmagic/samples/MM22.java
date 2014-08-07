@@ -60,9 +60,19 @@ public class MM22 implements PageProcessor {
     }
 
     public static void main(String[] args) {
-        Spider.create(new MM22()).addUrl("http://www.22mm.cc/mm/bagua/PiaJHaPHmbdamHbiH.html").thread(1)
-        .setDownloader(new SeleniumDownloader("/Users/kehongyun/tools/chrome/chromedriver").setSleepTime(1000))
-        .run();
+    	if(args!=null && args.length>0){
+    		System.out.println(args[0]);
+    		 Spider.create(new MM22()).addUrl("http://www.22mm.cc/mm/bagua/PiaJHaPHmbdamHbiH.html").thread(1)
+    	        .setDownloader(new SeleniumDownloader(args[0]).setSleepTime(1000))
+    	        .run();    		
+    	}
+    	else{
+    		System.out.println("beatch, no args");
+    		 Spider.create(new MM22()).addUrl("http://www.22mm.cc/mm/bagua/PiaJHaPHmbdamHbiH.html").thread(1)
+    	        .setDownloader(new SeleniumDownloader("/Users/kehongyun/tools/chrome/chromedriver").setSleepTime(1000))
+    	        .run();
+    	}
+       
     
     }
 
