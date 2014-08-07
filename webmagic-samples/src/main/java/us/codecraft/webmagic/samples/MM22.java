@@ -89,8 +89,8 @@ public class MM22 implements PageProcessor {
 				}
 				String jsonStr = OKHttpUtils.bowlingJson(album.getName(), sb.deleteCharAt(sb.length()-1).toString());
 				try {
-					String result = OKHttpUtils.post("http://localhost:3000/category/list", jsonStr);
-//					String result = OKHttpUtils.post("http://106.187.99.142:3000/category/list", jsonStr);
+//					String result = OKHttpUtils.post("http://localhost:3000/category/list", jsonStr);
+					String result = OKHttpUtils.post("http://106.187.99.142:3000/category/list", jsonStr);
 					System.out.println(result);
 				} catch (Exception e) {
 					e.printStackTrace();
