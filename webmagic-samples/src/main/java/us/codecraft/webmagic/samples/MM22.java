@@ -1,9 +1,6 @@
 package us.codecraft.webmagic.samples;
 
-import java.io.IOException;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +23,11 @@ public class MM22 implements PageProcessor {
     public void process(Page page) {
     	String title = page.getHtml().xpath("//*[@id='b-show']/dl/dd[1]/strong/text()").toString();
     	page.putField("title", title);
-
+    	
     	Album album = dataResult.get(title);
 
-    	String url = page.getHtml().$("div#imgString img","src").toString();
+    	String url = page.getHtml().$("div#imgString img","src").toString()+"##"+page.getResultItems().get("wxh");
     	page.putField("url", url);
-    	
     	
     	if(album==null){
 			album= new Album();
@@ -67,7 +63,7 @@ public class MM22 implements PageProcessor {
     public static String startUrl = qlmvStartUrl;
     
     public static void main(String[] args) {
-    	int threadNums = 5;
+    	int threadNums = 1;
     	if(args!=null && args.length>0){
     		System.out.println(args);
     		if(args.length==1){
