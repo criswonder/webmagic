@@ -63,7 +63,7 @@ public class MM22 implements PageProcessor {
     public static String startUrl = qlmvStartUrl;
     
     public static void main(String[] args) {
-    	int threadNums = 1;
+    	int threadNums = 5;
     	if(args!=null && args.length>0){
     		System.out.println(args);
     		if(args.length==1){
